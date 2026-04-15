@@ -78,7 +78,10 @@ org_yaml_path = ____
 print(f"YAML path: {org_yaml_path}")
 
 # ── Checkpoint 2 ────────────────────────────────────────────────────────
-assert "departments" in ORG_YAML and "delegations" in ORG_YAML
+# Modern pact schema: `envelopes:` block holds the D/T/R delegation
+# contracts; the old `delegations:` top-level list is gone. Each
+# envelope entry is one delegation from a human to an agent.
+assert "departments" in ORG_YAML and "envelopes" in ORG_YAML
 assert org_yaml_path
 print("[x] Checkpoint 2 passed\n")
 
@@ -88,7 +91,7 @@ print("[x] Checkpoint 2 passed\n")
 # ════════════════════════════════════════════════════════════════════════
 
 print("=" * 70)
-print("TASK 3: GovernanceEngine.compile_org()")
+print("TASK 3: Construct GovernanceEngine from org YAML")
 print("=" * 70)
 
 # TODO: Compile the YAML. Use compile_governance(org_yaml_path).
@@ -146,7 +149,7 @@ print("=" * 70)
 print(
     """
   [x] Wrote a D/T/R organisation definition in YAML
-  [x] Compiled it with GovernanceEngine.compile_org()
+  [x] Compiled it with compile_governance() -> GovernanceEngine(load_org_yaml)
   [x] Visualised the delegation chains
   [x] Mapped the grammar to a MAS TRM audit scenario
 
